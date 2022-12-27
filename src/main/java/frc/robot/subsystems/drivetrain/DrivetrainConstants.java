@@ -35,6 +35,7 @@ public final class DrivetrainConstants {
   public static final double BACK_RIGHT_MODULE_STEER_OFFSET = 40.3335;
 
   public static final int PIGEON_ID = 18;
+  public static final String PIGEON_CAN_BUS_NAME = "CANivore";
 
   // FIXME: update robot dimensions
 
