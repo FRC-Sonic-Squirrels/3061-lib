@@ -67,6 +67,7 @@ public class SwerveModule {
 
     if (isOpenLoop) {
       double percentOutput = desiredState.speedMetersPerSecond / maxVelocity;
+      // FIXME: use motor voltage for more consistent open loop response
       io.setDriveMotorPercentage(percentOutput);
     } else {
       io.setDriveVelocity(desiredState.speedMetersPerSecond);
