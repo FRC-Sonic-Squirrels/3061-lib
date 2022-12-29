@@ -2,6 +2,7 @@ package frc.robot.subsystems.drivetrain;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.util.Units;
 import frc.lib.team3061.swerve.SwerveModuleConstants;
 
 public final class DrivetrainConstants {
@@ -12,29 +13,27 @@ public final class DrivetrainConstants {
     throw new IllegalStateException(CONSTRUCTOR_EXCEPTION);
   }
 
-  // FIXME: update all CAN IDs
-  // FIXME: update all steer offsets
-  public static final int FRONT_LEFT_MODULE_DRIVE_MOTOR = 7;
-  public static final int FRONT_LEFT_MODULE_STEER_MOTOR = 6;
-  public static final int FRONT_LEFT_MODULE_STEER_ENCODER = 8;
-  public static final double FRONT_LEFT_MODULE_STEER_OFFSET = 118.0371;
+  public static final int FRONT_LEFT_MODULE_DRIVE_MOTOR = 1;
+  public static final int FRONT_LEFT_MODULE_STEER_MOTOR = 11;
+  public static final int FRONT_LEFT_MODULE_STEER_ENCODER = 21;
+  public static final double FRONT_LEFT_MODULE_STEER_OFFSET = 320.2;
 
-  public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 13;
+  public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 2;
   public static final int FRONT_RIGHT_MODULE_STEER_MOTOR = 12;
-  public static final int FRONT_RIGHT_MODULE_STEER_ENCODER = 14;
-  public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = 102.9968;
+  public static final int FRONT_RIGHT_MODULE_STEER_ENCODER = 22;
+  public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = 93.3;
 
-  public static final int BACK_LEFT_MODULE_DRIVE_MOTOR = 10;
-  public static final int BACK_LEFT_MODULE_STEER_MOTOR = 9;
-  public static final int BACK_LEFT_MODULE_STEER_ENCODER = 11;
-  public static final double BACK_LEFT_MODULE_STEER_OFFSET = -189.7051;
+  public static final int BACK_LEFT_MODULE_DRIVE_MOTOR = 4;
+  public static final int BACK_LEFT_MODULE_STEER_MOTOR = 14;
+  public static final int BACK_LEFT_MODULE_STEER_ENCODER = 24;
+  public static final double BACK_LEFT_MODULE_STEER_OFFSET = 282.4;
 
-  public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 16;
-  public static final int BACK_RIGHT_MODULE_STEER_MOTOR = 15;
-  public static final int BACK_RIGHT_MODULE_STEER_ENCODER = 17;
-  public static final double BACK_RIGHT_MODULE_STEER_OFFSET = 40.3335;
+  public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 3;
+  public static final int BACK_RIGHT_MODULE_STEER_MOTOR = 14;
+  public static final int BACK_RIGHT_MODULE_STEER_ENCODER = 23;
+  public static final double BACK_RIGHT_MODULE_STEER_OFFSET = 329.2;
 
-  public static final int PIGEON_ID = 18;
+  public static final int PIGEON_ID = 15;
   public static final String PIGEON_CAN_BUS_NAME = "CANivore";
 
   // FIXME: update robot dimensions
@@ -44,17 +43,18 @@ public final class DrivetrainConstants {
    *
    * <p>Should be measured from center to center.
    */
-  public static final double TRACKWIDTH_METERS = 0.5715; // 22.5 inches
+  public static final double TRACKWIDTH_METERS = Units.inchesToMeters(25);
 
   /**
    * The front-to-back distance between the drivetrain wheels.
    *
    * <p>Should be measured from center to center.
    */
-  public static final double WHEELBASE_METERS = 0.5969; // 23.5 inches
+  public static final double WHEELBASE_METERS = Units.inchesToMeters(24);
 
-  public static final double ROBOT_WIDTH_WITH_BUMPERS = 0.89; // meters
-  public static final double ROBOT_LENGTH_WITH_BUMPERS = 0.91; // meters
+  // TODO: robot width and length are only a guess, measure it
+  public static final double ROBOT_WIDTH_WITH_BUMPERS =  Units.inchesToMeters(32);
+  public static final double ROBOT_LENGTH_WITH_BUMPERS = Units.inchesToMeters(31);
 
   /* The geometry and coordinate systems can be confusing. Refer to this document
   for a detailed explanation: https://docs.google.com/document/d/17dg5cIfqVOlQTTbo2ust4QxTZlUoPNzuBu2oe58Ov84/edit#heading=h.x4ppzp81ed1
@@ -108,10 +108,10 @@ public final class DrivetrainConstants {
 
   // FIXME: tune PID values for auto paths
 
-  public static final double AUTO_DRIVE_P_CONTROLLER = 2.2956;
+  public static final double AUTO_DRIVE_P_CONTROLLER = 2.2941;
   public static final double AUTO_DRIVE_I_CONTROLLER = 0.0;
   public static final double AUTO_DRIVE_D_CONTROLLER = 0.0;
-  public static final double AUTO_TURN_P_CONTROLLER = 4.9;
+  public static final double AUTO_TURN_P_CONTROLLER = 4.9;  // TODO: test this. 2022 season was 2.0, 
   public static final double AUTO_TURN_I_CONTROLLER = 0.0;
   public static final double AUTO_TURN_D_CONTROLLER = 0.0;
 
