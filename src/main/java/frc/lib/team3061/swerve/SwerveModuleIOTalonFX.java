@@ -131,6 +131,7 @@ public class SwerveModuleIOTalonFX implements SwerveModuleIO {
   private double calculateFeedforward(double velocity) {
     double percentage = this.feedForward.calculate(velocity);
     // clamp the voltage to the maximum voltage
+    // FIXME: what if voltage is < -1.0 ?? is this a BUG?
     if (percentage > 1.0) {
       return 1.0;
     }
