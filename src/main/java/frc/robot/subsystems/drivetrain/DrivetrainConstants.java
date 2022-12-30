@@ -52,9 +52,8 @@ public final class DrivetrainConstants {
    */
   public static final double WHEELBASE_METERS = Units.inchesToMeters(24);
 
-  // TODO: robot width and length are only a guess, measure it
-  public static final double ROBOT_WIDTH_WITH_BUMPERS =  Units.inchesToMeters(32);
-  public static final double ROBOT_LENGTH_WITH_BUMPERS = Units.inchesToMeters(31);
+  public static final double ROBOT_WIDTH_WITH_BUMPERS =  Units.inchesToMeters(35);
+  public static final double ROBOT_LENGTH_WITH_BUMPERS = Units.inchesToMeters(36);
 
   /* The geometry and coordinate systems can be confusing. Refer to this document
   for a detailed explanation: https://docs.google.com/document/d/17dg5cIfqVOlQTTbo2ust4QxTZlUoPNzuBu2oe58Ov84/edit#heading=h.x4ppzp81ed1
