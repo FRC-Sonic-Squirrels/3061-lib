@@ -52,7 +52,7 @@ public final class DrivetrainConstants {
    */
   public static final double WHEELBASE_METERS = Units.inchesToMeters(24);
 
-  public static final double ROBOT_WIDTH_WITH_BUMPERS =  Units.inchesToMeters(35);
+  public static final double ROBOT_WIDTH_WITH_BUMPERS = Units.inchesToMeters(35);
   public static final double ROBOT_LENGTH_WITH_BUMPERS = Units.inchesToMeters(36);
 
   /* The geometry and coordinate systems can be confusing. Refer to this document
