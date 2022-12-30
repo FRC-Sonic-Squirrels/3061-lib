@@ -28,7 +28,7 @@ public final class Constants {
 
   public static final String CAN_BUS_NAME = "";
 
-  private static final RobotType ROBOT = RobotType.ROBOT_SIMBOT;
+  private static final RobotType ROBOT = RobotType.ROBOT_2023_PRESEASON;
 
   private static final Alert invalidRobotAlert =
       new Alert("Invalid robot selected, using competition robot as default.", AlertType.ERROR);
