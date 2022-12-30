@@ -110,7 +110,9 @@ public final class DrivetrainConstants {
   public static final double AUTO_DRIVE_P_CONTROLLER = 2.2941;
   public static final double AUTO_DRIVE_I_CONTROLLER = 0.0;
   public static final double AUTO_DRIVE_D_CONTROLLER = 0.0;
-  public static final double AUTO_TURN_P_CONTROLLER = 4.9;  // TODO: test this. 2022 season was 2.0, 
+
+  // TODO: test this. 2022 season was 2.0
+  public static final double AUTO_TURN_P_CONTROLLER = 4.9;
   public static final double AUTO_TURN_I_CONTROLLER = 0.0;
   public static final double AUTO_TURN_D_CONTROLLER = 0.0;
 
