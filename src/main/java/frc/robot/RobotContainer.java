@@ -8,6 +8,7 @@ import static frc.robot.subsystems.drivetrain.DrivetrainConstants.*;
 
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -15,8 +16,7 @@ import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.lib.team3061.gyro.GyroIO;
 import frc.lib.team3061.gyro.GyroIOPigeon2;
 import frc.lib.team3061.pneumatics.Pneumatics;
@@ -41,13 +41,21 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  private final CommandJoystick joystick0 = new CommandJoystick(0);
-  private final CommandJoystick joystick1 = new CommandJoystick(1);
-  private final Trigger[] joystickButtons0;
-  private final Trigger[] joystickButtons1;
+  private final XboxController driverController = new XboxController(0);
+  // private final CommandJoystick joystick1 = new CommandJoystick(1);
+  // private final Trigger[] joystickButtons0;
+  // private final Trigger[] joystickButtons1;
+
+  /* Driver Buttons */
+  private final JoystickButton zeroGyro =
+      new JoystickButton(driverController, XboxController.Button.kBack.value);
+  private final JoystickButton robotCentric =
+      new JoystickButton(driverController, XboxController.Button.kB.value);
+  private final JoystickButton xStance =
+      new JoystickButton(driverController, XboxController.Button.kA.value);
 
   private Drivetrain drivetrain;
-  private Pneumatics pneumatics;
+  // private Pneumatics pneumatics;
 
   // use AdvantageKit's LoggedDashboardChooser instead of SendableChooser to ensure accurate logging
   private final LoggedDashboardChooser<Command> autoChooser =
@@ -110,7 +118,8 @@ public class RobotContainer {
                     MAX_VELOCITY_METERS_PER_SECOND);
 
             drivetrain = new Drivetrain(gyro, flModule, frModule, blModule, brModule);
-            pneumatics = new Pneumatics(new PneumaticsIORev());
+            // FIXME: enable pneumatics again one day
+            // pneumatics = new Pneumatics(new PneumaticsIORev());
             break;
           }
         case ROBOT_SIMBOT:
@@ -127,7 +136,8 @@ public class RobotContainer {
             SwerveModule brModule =
                 new SwerveModule(new SwerveModuleIOSim(), 3, MAX_VELOCITY_METERS_PER_SECOND);
             drivetrain = new Drivetrain(new GyroIO() {}, flModule, frModule, blModule, brModule);
-            pneumatics = new Pneumatics(new PneumaticsIO() {});
+            // FIXME: enable pneumatics again one day
+            // pneumatics = new Pneumatics(new PneumaticsIO() {});
             break;
           }
         default:
@@ -147,24 +157,14 @@ public class RobotContainer {
       SwerveModule brModule =
           new SwerveModule(new SwerveModuleIO() {}, 3, MAX_VELOCITY_METERS_PER_SECOND);
       drivetrain = new Drivetrain(new GyroIO() {}, flModule, frModule, blModule, brModule);
-      //pneumatics = new Pneumatics(new PneumaticsIO() {});
+      // pneumatics = new Pneumatics(new PneumaticsIO() {});
     }
 
     // workaround warning about unused variable
-    //pneumatics.getPressure();
+    // pneumatics.getPressure();
 
     // disable all telemetry in the LiveWindow to reduce the processing during each iteration
     LiveWindow.disableAllTelemetry();
-
-    // buttons use 1-based indexing such that the index matches the button number; leave index 0 set
-    // to null
-    this.joystickButtons0 = new Trigger[13];
-    this.joystickButtons1 = new Trigger[13];
-
-    for (int i = 1; i < joystickButtons0.length; i++) {
-      joystickButtons0[i] = joystick0.button(i);
-      joystickButtons1[i] = joystick1.button(i);
-    }
 
     /*
      * Set up the default command for the drivetrain. The joysticks' values map to percentage of the
@@ -177,7 +177,11 @@ public class RobotContainer {
      * and the left joystick's x axis specifies the velocity in the y direction.
      */
     drivetrain.setDefaultCommand(
-        new TeleopSwerve(drivetrain, joystick0::getY, joystick0::getX, joystick1::getX));
+        new TeleopSwerve(
+            drivetrain,
+            driverController::getLeftY,
+            driverController::getLeftX,
+            driverController::getRightX));
 
     configureButtonBindings();
     configureAutoCommands();
@@ -195,18 +199,19 @@ public class RobotContainer {
   /** Use this method to define your button->command mappings. */
   private void configureButtonBindings() {
     // field-relative toggle
-    joystickButtons0[3].toggleOnTrue(
+
+    robotCentric.toggleOnTrue(
         new ConditionalCommand(
             new InstantCommand(drivetrain::disableFieldRelative, drivetrain),
             new InstantCommand(drivetrain::enableFieldRelative, drivetrain),
             drivetrain::getFieldRelative));
 
     // reset gyro to 0 degrees
-    joystickButtons1[3].onTrue(new InstantCommand(drivetrain::zeroGyroscope, drivetrain));
+    zeroGyro.onTrue(new InstantCommand(drivetrain::zeroGyroscope, drivetrain));
 
     // x-stance
-    joystickButtons0[1].onTrue(new InstantCommand(drivetrain::enableXstance, drivetrain));
-    joystickButtons0[1].onFalse(new InstantCommand(drivetrain::disableXstance, drivetrain));
+    xStance.onTrue(new InstantCommand(drivetrain::enableXstance, drivetrain));
+    xStance.onFalse(new InstantCommand(drivetrain::disableXstance, drivetrain));
   }
 
   /** Use this method to define your commands for autonomous mode. */
