@@ -147,11 +147,11 @@ public class RobotContainer {
       SwerveModule brModule =
           new SwerveModule(new SwerveModuleIO() {}, 3, MAX_VELOCITY_METERS_PER_SECOND);
       drivetrain = new Drivetrain(new GyroIO() {}, flModule, frModule, blModule, brModule);
-      pneumatics = new Pneumatics(new PneumaticsIO() {});
+      //pneumatics = new Pneumatics(new PneumaticsIO() {});
     }
 
     // workaround warning about unused variable
-    pneumatics.getPressure();
+    //pneumatics.getPressure();
 
     // disable all telemetry in the LiveWindow to reduce the processing during each iteration
     LiveWindow.disableAllTelemetry();
