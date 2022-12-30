@@ -13,6 +13,8 @@ import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.CANCoderConfiguration;
 import com.ctre.phoenix.sensors.SensorInitializationStrategy;
 import com.ctre.phoenix.sensors.SensorTimeBase;
+
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import frc.lib.team254.drivers.TalonFXFactory;
@@ -130,12 +132,8 @@ public class SwerveModuleIOTalonFX implements SwerveModuleIO {
 
   private double calculateFeedforward(double velocity) {
     double percentage = this.feedForward.calculate(velocity);
-    // clamp the voltage to the maximum voltage
-    // FIXME: what if voltage is < -1.0 ?? is this a BUG?
-    if (percentage > 1.0) {
-      return 1.0;
-    }
-    return percentage;
+    // clamp the percent output to +/- 100%
+    return MathUtil.clamp(percentage, -1.0, 1.0);
   }
 
   /** Updates the set of loggable inputs. */
