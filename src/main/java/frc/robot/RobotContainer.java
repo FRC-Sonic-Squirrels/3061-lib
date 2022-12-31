@@ -14,8 +14,6 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.lib.team3061.gyro.GyroIO;
 import frc.lib.team3061.gyro.GyroIOPigeon2;
@@ -224,15 +222,17 @@ public class RobotContainer {
             AUTO_MAX_SPEED_METERS_PER_SECOND,
             AUTO_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED);
     PathPlannerTrajectory testPath3mForward360 =
-            PathPlanner.loadPath(
-                "3mForward360",
-                AUTO_MAX_SPEED_METERS_PER_SECOND,
-                AUTO_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED);
+        PathPlanner.loadPath(
+            "3mForward360",
+            AUTO_MAX_SPEED_METERS_PER_SECOND,
+            AUTO_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED);
 
     autoChooser.addDefaultOption("Do Nothing", new InstantCommand());
     autoChooser.addOption("2m Forward", new FollowPath(testPath2mForward, drivetrain, true));
-    autoChooser.addOption("2m Forward w/ 180", new FollowPath(testPath2mForward180, drivetrain, true));
-    autoChooser.addOption("3m Forward 2/ 360", new FollowPath(testPath3mForward360, drivetrain, true));
+    autoChooser.addOption(
+        "2m Forward w/ 180", new FollowPath(testPath2mForward180, drivetrain, true));
+    autoChooser.addOption(
+        "3m Forward 2/ 360", new FollowPath(testPath3mForward360, drivetrain, true));
     autoChooser.addOption(
         "Drive Characterization",
         new FeedForwardCharacterization(
