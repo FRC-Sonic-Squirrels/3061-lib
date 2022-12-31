@@ -213,24 +213,26 @@ public class RobotContainer {
 
   /** Use this method to define your commands for autonomous mode. */
   private void configureAutoCommands() {
-    PathPlannerTrajectory auto1Path =
+    PathPlannerTrajectory testPath2mForward =
         PathPlanner.loadPath(
-            "testPath1",
+            "2mForward",
             AUTO_MAX_SPEED_METERS_PER_SECOND,
             AUTO_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED);
-    PathPlannerTrajectory auto2Path =
+    PathPlannerTrajectory testPath2mForward180 =
         PathPlanner.loadPath(
-            "testPath2",
+            "2mForward180",
             AUTO_MAX_SPEED_METERS_PER_SECOND,
             AUTO_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED);
-    Command autoTest =
-        new SequentialCommandGroup(
-            new FollowPath(auto1Path, drivetrain, true),
-            new WaitCommand(2),
-            new FollowPath(auto2Path, drivetrain, false));
+    PathPlannerTrajectory testPath3mForward360 =
+            PathPlanner.loadPath(
+                "3mForward360",
+                AUTO_MAX_SPEED_METERS_PER_SECOND,
+                AUTO_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED);
 
     autoChooser.addDefaultOption("Do Nothing", new InstantCommand());
-    autoChooser.addOption("Test Path", autoTest);
+    autoChooser.addOption("2m Forward", new FollowPath(testPath2mForward, drivetrain, true));
+    autoChooser.addOption("2m Forward w/ 180", new FollowPath(testPath2mForward180, drivetrain, true));
+    autoChooser.addOption("3m Forward 2/ 360", new FollowPath(testPath3mForward360, drivetrain, true));
     autoChooser.addOption(
         "Drive Characterization",
         new FeedForwardCharacterization(
