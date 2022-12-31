@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.team3061.gyro.GyroIO;
@@ -38,6 +39,7 @@ import org.littletonrobotics.junction.Logger;
 public class Drivetrain extends SubsystemBase {
   private final GyroIO gyroIO;
   private final GyroIOInputsAutoLogged gyroInputs = new GyroIOInputsAutoLogged();
+  private final Field2d field = new Field2d();
 
   private final TunableNumber autoDriveKp =
       new TunableNumber("AutoDrive/DriveKp", AUTO_DRIVE_P_CONTROLLER);
@@ -117,7 +119,7 @@ public class Drivetrain extends SubsystemBase {
 
     this.zeroGyroscope();
 
-    this.isFieldRelative = false;
+    this.isFieldRelative = true;
 
     this.gyroOffset = 0;
 
@@ -362,6 +364,8 @@ public class Drivetrain extends SubsystemBase {
     }
 
     poseEstimator.updateWithTime(this.timer.get(), this.getRotation(), swerveModulePositions);
+
+    field.setRobotPose(poseEstimator.getEstimatedPosition());
 
     // update the brake mode based on the robot's velocity and state (enabled/disabled)
     updateBrakeMode();
