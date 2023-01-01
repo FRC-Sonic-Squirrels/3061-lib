@@ -16,7 +16,8 @@ public final class SwerveModuleConstants {
 
   /* MK4i L2 */
   public static final double MK4I_L2_WHEEL_DIAMETER_METERS = 0.10033;
-  public static final double MK4I_L2_WHEEL_CIRCUMFERENCE_THEORETICAL = MK4I_L2_WHEEL_DIAMETER_METERS * Math.PI;
+  public static final double MK4I_L2_WHEEL_CIRCUMFERENCE_THEORETICAL =
+      MK4I_L2_WHEEL_DIAMETER_METERS * Math.PI;
   // FIXME: measure actual cicumference
   public static final double MK4I_L2_WHEEL_CIRCUMFERENCE = 0.309;
 

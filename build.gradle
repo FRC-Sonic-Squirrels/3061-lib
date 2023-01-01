@@ -174,3 +174,10 @@ gversion {
 }
 
 project.compileJava.dependsOn(createVersionFile)
+
+// install git pre-commit hook
+tasks.register('updateGitHooks', Copy) {
+    from './git-hooks/pre-commit'
+    into './.git/hooks'
+}
+compileJava.dependsOn updateGitHooks
