@@ -1,6 +1,10 @@
 # 3061-lib </br>
 
-Huskie Roboitcs, FRC Team 3061's, starter project and library focused on a swerve-based drivetrain. Supports SDS MK4/MK4i swerve modules using 2 Falcon 500 motors and a CTRE CANCoder, a CTRE Pigeon Gyro, and REV Robotics power distribution hub and pneumatics hub. However, due to the hardawre abstraction layer, this code can be adapated to other motor controllers, encoders, and gyros as well as different swerve module designs.
+Huskie Robotics, FRC Team 3061's, starter project and library focused on a swerve-based drivetrain. Supports SDS MK4/MK4i swerve modules using 2 Falcon 500 motors and a CTRE CANCoder, a CTRE Pigeon Gyro, and REV Robotics power distribution hub and pneumatics hub. However, due to the hardware abstraction layer, this code can be adapted to other motor controllers, encoders, and gyros as well as different swerve module designs.
+
+** Team 2930 **
+
+This fork of the 3061 code is specific to Team 2930 the Sonic Squirrels. A big thank you to team 3061 for developing this library.
 
 **Features**
 ----
@@ -45,14 +49,14 @@ The following constants must be adjusted in the Constants.java, DrivetrainConsta
 * Setting Steer Offsets (e.g., ```FRONT_LEFT_MODULE_STEER_OFFSET```) in DrivetrainConstants.java
     * set ```DEBUGGING``` in SwerveModule.java to true
     * for finding the offsets, use a piece of 1x1 metal that is straight against the forks of the front and back modules (on the left and right side) to ensure that the modules are straight
-    * point the bevel gears of all the wheels in the same direction (either facing left or right), and preferably you should have the wheels facing in the direction where a postive input to the drive motor drives forward; if for some reason you set the offsets with the wheels backwards, you can change the ```DRIVE_MOTOR_INVERTED``` to fix
+    * point the bevel gears of all the wheels in the same direction (either facing left or right), and preferably you should have the wheels facing in the direction where a positive input to the drive motor drives forward; if for some reason you set the offsets with the wheels backwards, you can change the ```DRIVE_MOTOR_INVERTED``` to fix
     * open Shuffleboard, go to the SwerveModule tab, and see 4 indicators called "Mod 0 Cancoder", "Mod 1 Cancoder", etc. If you have already straightened the modules, copy those 4 numbers exactly (to 2 decimal places) to their respective ```STEER_OFFSET``` constants
     * set ```DEBUGGING``` in SwerveModule.java back to false
 * Angle Motor PID Values (```ANGLE_KP```, ```ANGLE_KI```, ```ANGLE_KD```) in SwerveModuleConstants.java:
     * set ```TUNING_MODE``` in Constants.java to true
     * open Shuffleboard, go to the SmartDashboard tab, and see controls for each of the PID values; values can be changed via these controls as you interactively tune the controller
     * start with a low P value (0.01)
-    * multiply by 10 until the module starts oscilating around the set point
+    * multiply by 10 until the module starts oscillating around the set point
     * scale back by searching for the value (for example, if it starts oscillating at a P of 10, then try (10 -> 5 -> 7.5 -> etc.)) until the module overshoots the setpoint but corrects with no oscillation
     * repeat the process for D; the D value will basically help prevent the overshoot
     * ignore I
@@ -66,7 +70,7 @@ The following constants must be adjusted in the Constants.java, DrivetrainConsta
 * Drive Motor PID Values (```DRIVE_KP```, ```DRIVE_KI```, ```DRIVE_KD```) in SwerveModuleConstants.java:
     * set ```TUNING_MODE``` in Constants.java to true
     * open Shuffleboard, go to the SmartDashboard tab, and see controls for each of the PID values; values can be changed via these controls as you interactively tune the controller
-    * tune ```DRIVE_KP``` until it doesn't overshoot and doesn't oscilate around a target velocity
+    * tune ```DRIVE_KP``` until it doesn't overshoot and doesn't oscillate around a target velocity
     * copy the values from the Shuffleboard controls into SwerveModuleConstants.java
     * set ```TUNING_MODE``` in Constants.java to false
 * ```AUTO_DRIVE_P_CONTROLLER``` and ```AUTO_TURN_P_CONTROLLER``` constants in DrivetrainConstants.java:
@@ -82,7 +86,26 @@ The following constants must be adjusted in the Constants.java, DrivetrainConsta
 * Joystick 0 controls translation (forwards and sideways movement), and Joystick 1 controls rotation. </br>
 * Joystick 0's button 3 enables and disables field-relative driving.
 * Joystick 1's button 3 zeroes the gyro, useful when testing teleop, just rotate the robot forwards, and press the button to rezero.
-* Joystick 0's button 1 enables x-stance while presssed.
+* Joystick 0's button 1 enables x-stance while pressed.
+
+**Gradle Commands**
+
+Gradle, the build system, has been configured to use `Spotless` a syntax linter, that will check and enforce the coding style. Whenever the project is built, the code will have any style issues corrected. These corrections will need to be checked before committing the code via git. Below are some useful gradle commands.
+
+Some important gradle commands:
+
+* `gradlew spotlessApply` to run code formatting
+* `gradlew deploy` to both build and deploy code to the rio
+* `gradlew build` to build robot code (but **does not deploy**)
+
+Some other useful gradle commands:
+
+* `gradlew tasks` to view all available tasks
+* `gradlew clean` to remove build cache (can be used to troubleshoot odd build errors)
+* `gradlew Glass` to run Glass (WPILib graphing tool)
+* `gradlew PathWeaver` to run PathWeaver (WPILib path gen tool)
+* `gradlew ShuffleBoard` to run ShuffleBoard (WPILib Dashboard tool)
+* `gradlew SysId` to run SysID (WPILib characterization tool)
 
 **Credits**
 ----
