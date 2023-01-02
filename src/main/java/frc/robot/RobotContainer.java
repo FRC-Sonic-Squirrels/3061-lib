@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ConditionalCommand;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.lib.team3061.gyro.GyroIO;
@@ -196,17 +196,17 @@ public class RobotContainer {
     // field-relative toggle
 
     robotCentric.toggleOnTrue(
-        new ConditionalCommand(
-            new InstantCommand(drivetrain::disableFieldRelative, drivetrain),
-            new InstantCommand(drivetrain::enableFieldRelative, drivetrain),
+        Commands.either(
+            Commands.runOnce(drivetrain::disableFieldRelative, drivetrain),
+            Commands.runOnce(drivetrain::enableFieldRelative, drivetrain),
             drivetrain::getFieldRelative));
 
     // reset gyro to 0 degrees
-    zeroGyro.onTrue(new InstantCommand(drivetrain::zeroGyroscope, drivetrain));
+    zeroGyro.onTrue(Commands.runOnce(drivetrain::zeroGyroscope, drivetrain));
 
     // x-stance
-    xStance.onTrue(new InstantCommand(drivetrain::enableXstance, drivetrain));
-    xStance.onFalse(new InstantCommand(drivetrain::disableXstance, drivetrain));
+    xStance.onTrue(Commands.runOnce(drivetrain::enableXstance, drivetrain));
+    xStance.onFalse(Commands.runOnce(drivetrain::disableXstance, drivetrain));
   }
 
   /** Use this method to define your commands for autonomous mode. */
