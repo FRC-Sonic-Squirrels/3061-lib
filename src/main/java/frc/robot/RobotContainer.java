@@ -17,6 +17,9 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.lib.team3061.gyro.GyroIO;
 import frc.lib.team3061.gyro.GyroIOPigeon2;
+import frc.lib.team3061.pneumatics.Pneumatics;
+import frc.lib.team3061.pneumatics.PneumaticsIO;
+import frc.lib.team3061.pneumatics.PneumaticsIORev;
 import frc.lib.team3061.swerve.SwerveModule;
 import frc.lib.team3061.swerve.SwerveModuleIO;
 import frc.lib.team3061.swerve.SwerveModuleIOSim;
@@ -37,9 +40,6 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
  */
 public class RobotContainer {
   private final XboxController driverController = new XboxController(0);
-  // private final CommandJoystick joystick1 = new CommandJoystick(1);
-  // private final Trigger[] joystickButtons0;
-  // private final Trigger[] joystickButtons1;
 
   /* Driver Buttons */
   private final JoystickButton zeroGyro =
@@ -50,7 +50,7 @@ public class RobotContainer {
       new JoystickButton(driverController, XboxController.Button.kA.value);
 
   private Drivetrain drivetrain;
-  // private Pneumatics pneumatics;
+  private Pneumatics pneumatics;
 
   // use AdvantageKit's LoggedDashboardChooser instead of SendableChooser to ensure accurate logging
   private final LoggedDashboardChooser<Command> autoChooser =
@@ -113,8 +113,7 @@ public class RobotContainer {
                     MAX_VELOCITY_METERS_PER_SECOND);
 
             drivetrain = new Drivetrain(gyro, flModule, frModule, blModule, brModule);
-            // FIXME: enable pneumatics again one day
-            // pneumatics = new Pneumatics(new PneumaticsIORev());
+            pneumatics = new Pneumatics(new PneumaticsIORev());
             break;
           }
         case ROBOT_SIMBOT:
@@ -131,8 +130,7 @@ public class RobotContainer {
             SwerveModule brModule =
                 new SwerveModule(new SwerveModuleIOSim(), 3, MAX_VELOCITY_METERS_PER_SECOND);
             drivetrain = new Drivetrain(new GyroIO() {}, flModule, frModule, blModule, brModule);
-            // FIXME: enable pneumatics again one day
-            // pneumatics = new Pneumatics(new PneumaticsIO() {});
+            pneumatics = new Pneumatics(new PneumaticsIO() {});
             break;
           }
         default:
@@ -152,11 +150,11 @@ public class RobotContainer {
       SwerveModule brModule =
           new SwerveModule(new SwerveModuleIO() {}, 3, MAX_VELOCITY_METERS_PER_SECOND);
       drivetrain = new Drivetrain(new GyroIO() {}, flModule, frModule, blModule, brModule);
-      // pneumatics = new Pneumatics(new PneumaticsIO() {});
+      pneumatics = new Pneumatics(new PneumaticsIO() {});
     }
 
     // workaround warning about unused variable
-    // pneumatics.getPressure();
+    pneumatics.getPressure();
 
     // disable all telemetry in the LiveWindow to reduce the processing during each iteration
     LiveWindow.disableAllTelemetry();
