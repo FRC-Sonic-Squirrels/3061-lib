@@ -2,9 +2,19 @@
 
 Huskie Robotics, FRC Team 3061's, starter project and library focused on a swerve-based drivetrain. Supports SDS MK4/MK4i swerve modules using 2 Falcon 500 motors and a CTRE CANCoder, a CTRE Pigeon Gyro, and REV Robotics power distribution hub and pneumatics hub. However, due to the hardware abstraction layer, this code can be adapted to other motor controllers, encoders, and gyros as well as different swerve module designs.
 
-**Team 2930**
+## Team 2930
 
 This fork of the 3061 code is specific to Team 2930 the Sonic Squirrels. A big thank you to team 3061 for developing this library.
+
+Major differences:
+
+* Allow separate CAN bus name for motors and Pigeon (for compatibility with our 2022 robot)
+* Use XboxController class for driver input
+* automatically run spotlessApply on build to enforce code style, instead of just blocking on deploy
+* support for not using Analog pressure sensor (for backwards compatibility with 2022 robot)
+* use cSpell VS Code plugin and a lot of spelling corrections
+* Use SDS Mk4i by default (original defaulted to Mk4)
+
 
 **Features**
 ----
