@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-echo "Installing git hooks"
-rm -f .git/hooks/pre-commit
-# insert JAVA_HOME into git-hook script using sed
-sed "s#JAVAHOME#$(echo $JAVA_HOME | sed -e 's/\\/\\\\/g; s/\//\\\//g; s/&/\\\&/g')#g" git-hooks/pre-commit > .git/hooks/pre-commit
