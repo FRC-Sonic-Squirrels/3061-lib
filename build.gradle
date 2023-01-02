@@ -175,8 +175,5 @@ gversion {
 
 project.compileJava.dependsOn(createVersionFile)
 
-// install git pre-commit hook
-tasks.register('updateGitHooks', Exec) {
-    commandLine 'bash', './init'
-}
-compileJava.dependsOn updateGitHooks
+
+build.dependsOn spotlessApply
