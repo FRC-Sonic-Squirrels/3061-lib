@@ -8,6 +8,7 @@ public final class PneumaticsConstants {
     throw new IllegalStateException(CONSTRUCTOR_EXCEPTION);
   }
 
+  // FIXME: update Pneumatic Hub CAN ID
   public static final int PNEUMATICS_HUB_ID = 1;
   public static final int FLOW_SENSOR_CHANNEL = 0;
   public static final int REV_HIGH_PRESSURE_SENSOR_CHANNEL = 0;
