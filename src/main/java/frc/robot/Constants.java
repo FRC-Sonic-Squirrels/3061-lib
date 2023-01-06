@@ -28,6 +28,9 @@ public final class Constants {
 
   public static final String CAN_BUS_NAME = "";
 
+  // FIXME: specify the name of the camera used for detecting AprilTags
+  public static final String CAMERA_NAME = "ov9268";
+
   private static final RobotType ROBOT = RobotType.ROBOT_2023_PRESEASON;
 
   private static final Alert invalidRobotAlert =

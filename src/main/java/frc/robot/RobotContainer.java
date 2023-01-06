@@ -4,10 +4,12 @@
 
 package frc.robot;
 
+import static frc.robot.Constants.*;
 import static frc.robot.subsystems.drivetrain.DrivetrainConstants.*;
 
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -24,12 +26,19 @@ import frc.lib.team3061.swerve.SwerveModule;
 import frc.lib.team3061.swerve.SwerveModuleIO;
 import frc.lib.team3061.swerve.SwerveModuleIOSim;
 import frc.lib.team3061.swerve.SwerveModuleIOTalonFX;
+import frc.lib.team3061.vision.Vision;
+import frc.lib.team3061.vision.VisionConstants;
+import frc.lib.team3061.vision.VisionIO;
+import frc.lib.team3061.vision.VisionIOPhotonVision;
+import frc.lib.team3061.vision.VisionIOSim;
 import frc.robot.Constants.Mode;
 import frc.robot.commands.FeedForwardCharacterization;
 import frc.robot.commands.FeedForwardCharacterization.FeedForwardCharacterizationData;
 import frc.robot.commands.FollowPath;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.drivetrain.Drivetrain;
+import java.io.IOException;
+import java.util.ArrayList;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -50,7 +59,6 @@ public class RobotContainer {
       new JoystickButton(driverController, XboxController.Button.kA.value);
 
   private Drivetrain drivetrain;
-  private Pneumatics pneumatics;
 
   // use AdvantageKit's LoggedDashboardChooser instead of SendableChooser to ensure accurate logging
   private final LoggedDashboardChooser<Command> autoChooser =
@@ -113,7 +121,8 @@ public class RobotContainer {
                     MAX_VELOCITY_METERS_PER_SECOND);
 
             drivetrain = new Drivetrain(gyro, flModule, frModule, blModule, brModule);
-            pneumatics = new Pneumatics(new PneumaticsIORev());
+            new Pneumatics(new PneumaticsIORev());
+            new Vision(new VisionIOPhotonVision(CAMERA_NAME));
             break;
           }
         case ROBOT_SIMBOT:
@@ -130,7 +139,16 @@ public class RobotContainer {
             SwerveModule brModule =
                 new SwerveModule(new SwerveModuleIOSim(), 3, MAX_VELOCITY_METERS_PER_SECOND);
             drivetrain = new Drivetrain(new GyroIO() {}, flModule, frModule, blModule, brModule);
-            pneumatics = new Pneumatics(new PneumaticsIO() {});
+            new Pneumatics(new PneumaticsIO() {});
+            AprilTagFieldLayout layout;
+            try {
+              layout = new AprilTagFieldLayout(VisionConstants.APRILTAG_FIELD_LAYOUT_PATH);
+            } catch (IOException e) {
+              layout = new AprilTagFieldLayout(new ArrayList<>(), 16.4592, 8.2296);
+            }
+            new Vision(
+                new VisionIOSim(layout, drivetrain::getPose, VisionConstants.ROBOT_TO_CAMERA));
+
             break;
           }
         default:
@@ -150,11 +168,9 @@ public class RobotContainer {
       SwerveModule brModule =
           new SwerveModule(new SwerveModuleIO() {}, 3, MAX_VELOCITY_METERS_PER_SECOND);
       drivetrain = new Drivetrain(new GyroIO() {}, flModule, frModule, blModule, brModule);
-      pneumatics = new Pneumatics(new PneumaticsIO() {});
+      new Pneumatics(new PneumaticsIO() {});
+      new Vision(new VisionIO() {});
     }
-
-    // workaround warning about unused variable
-    pneumatics.getPressure();
 
     // disable all telemetry in the LiveWindow to reduce the processing during each iteration
     LiveWindow.disableAllTelemetry();
