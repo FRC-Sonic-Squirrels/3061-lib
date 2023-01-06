@@ -51,7 +51,9 @@ The following constants must be adjusted in the Constants.java, DrivetrainConsta
     * ```DRIVE_MOTOR_INVERTED``` constant: when the drive motor is supplied a positive input, it turns the swerve module wheel such that the robot moves forward; if not, set to true
     * ```ANGLE_MOTOR_INVERTED``` constant: when the angle motor is supplied a positive input, it rotates the swerve module wheel such that the wheel rotates in the CCW direction; if not, set to true
     * ```CAN_CODER_INVERTED``` constant: when the angle motor rotates the swerve module wheel in a CCW direction, the CANcoder should increase its reading; if not, set to true
-
+* PneumaticConstants.java
+    * ```PNEUMATICS_HUB_ID``` constant: set the CAN ID of your REV Pneumatic hub
+    * configure the channels for your flow sensor (if applicable) and high/low pressure sensor channels
 
 **Tuning**
 ----
