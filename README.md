@@ -94,11 +94,11 @@ The following constants must be adjusted in the Constants.java, DrivetrainConsta
 
 **Joystick Mappings**
 ----
-* This code is setup to use 2 joysticks to control the robot. </br>
-* Joystick 0 controls translation (forwards and sideways movement), and Joystick 1 controls rotation. </br>
-* Joystick 0's button 3 enables and disables field-relative driving.
-* Joystick 1's button 3 zeroes the gyro, useful when testing teleop, just rotate the robot forwards, and press the button to rezero.
-* Joystick 0's button 1 enables x-stance while pressed.
+* This code is setup to use a single XBox controller to control the robot
+* The left stick controls translation (forwards and sideways movement), and the right stick controls rotation.
+* The B button toggles between field-relative and robot-centric driving.
+* The back button zeroes the gyro, useful when testing teleop, just rotate the robot forwards, and press the button to rezero.
+* The A button enables x-stance while pressed.
 
 **Gradle Commands**
 
