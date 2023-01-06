@@ -10,9 +10,7 @@ package frc.lib.team3061.pneumatics;
 
 import static frc.lib.team3061.pneumatics.PneumaticsConstants.*;
 
-import edu.wpi.first.hal.REVPHJNI;
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.CompressorConfigType;
 import edu.wpi.first.wpilibj.PneumaticHub;
 
 /**
@@ -23,18 +21,22 @@ public class PneumaticsIORev implements PneumaticsIO {
 
   private final PneumaticHub pneumatics;
   private final AnalogInput flowSensor;
-  private final CompressorConfigType compressorType;
+  private final boolean useAnalogSensor;
 
-  public PneumaticsIORev() {
+  public PneumaticsIORev(boolean useAnalogSensor) {
+    this.useAnalogSensor = useAnalogSensor;
     pneumatics = new PneumaticHub(PNEUMATICS_HUB_ID);
     flowSensor = new AnalogInput(FLOW_SENSOR_CHANNEL);
-    compressorType = pneumatics.getCompressorConfigType();
-    useLowClosedLoopThresholds(false);
+    if (this.useAnalogSensor) {
+      useLowClosedLoopThresholds(false);
+    } else {
+      pneumatics.enableCompressorDigital();
+    }
   }
 
   @Override
   public void updateInputs(PneumaticsIOInputs inputs) {
-    if (compressorType.value == REVPHJNI.COMPRESSOR_CONFIG_TYPE_ANALOG) {
+    if (useAnalogSensor) {
       inputs.highPressurePSI = pneumatics.getPressure(REV_HIGH_PRESSURE_SENSOR_CHANNEL);
       inputs.lowPressurePSI = pneumatics.getPressure(REV_LOW_PRESSURE_SENSOR_CHANNEL);
     }
@@ -50,13 +52,15 @@ public class PneumaticsIORev implements PneumaticsIO {
 
   @Override
   public void useLowClosedLoopThresholds(boolean useLow) {
-    if (compressorType.value == REVPHJNI.COMPRESSOR_CONFIG_TYPE_ANALOG) {
+    if (useAnalogSensor) {
       if (useLow) {
         pneumatics.enableCompressorAnalog(MIN_LOW_PRESSURE, MAX_LOW_PRESSURE);
       } else {
         pneumatics.enableCompressorAnalog(MIN_HIGH_PRESSURE, MAX_HIGH_PRESSURE);
       }
+    } else {
+      // FIXME: warn that analog pressure sensor is not configured
+      pneumatics.enableCompressorDigital();
     }
-    // FIXME: throw an alert if called on non-Analog device
   }
 }
