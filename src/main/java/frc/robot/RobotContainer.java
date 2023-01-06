@@ -113,7 +113,7 @@ public class RobotContainer {
                     MAX_VELOCITY_METERS_PER_SECOND);
 
             drivetrain = new Drivetrain(gyro, flModule, frModule, blModule, brModule);
-            new Pneumatics(new PneumaticsIORev(false))
+            new Pneumatics(new PneumaticsIORev(false));
             break;
           }
         case ROBOT_SIMBOT:
