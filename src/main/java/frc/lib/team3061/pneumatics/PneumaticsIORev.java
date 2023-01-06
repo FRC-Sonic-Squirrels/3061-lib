@@ -27,6 +27,8 @@ public class PneumaticsIORev implements PneumaticsIO {
     this.useAnalogSensor = useAnalogSensor;
     pneumatics = new PneumaticHub(PNEUMATICS_HUB_ID);
     flowSensor = new AnalogInput(FLOW_SENSOR_CHANNEL);
+    // FIXME: test hybrid mode, allows both digital and analog sensors simultaneously
+    // https://first.wpi.edu/wpilib/allwpilib/docs/development/java/edu/wpi/first/wpilibj/PneumaticHub.html#enableCompressorHybrid(double,double)
     if (this.useAnalogSensor) {
       useLowClosedLoopThresholds(false);
     } else {
