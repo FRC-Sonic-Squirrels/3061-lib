@@ -66,6 +66,7 @@ public class Robot extends LoggedRobot {
 
     switch (Constants.getMode()) {
       case REAL:
+        // FIXME: this requires a USB stick to be inserted into the ROBOrio
         logger.addDataReceiver(new WPILOGWriter("/media/sda1"));
 
         // Provide log data over the network, viewable in Advantage Scope.
