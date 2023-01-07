@@ -30,6 +30,9 @@ import frc.robot.commands.FeedForwardCharacterization.FeedForwardCharacterizatio
 import frc.robot.commands.FollowPath;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.drivetrain.Drivetrain;
+import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.intake.IntakeIO;
+import frc.robot.subsystems.intake.IntakeIOFalcon;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -48,9 +51,12 @@ public class RobotContainer {
       new JoystickButton(driverController, XboxController.Button.kB.value);
   private final JoystickButton xStance =
       new JoystickButton(driverController, XboxController.Button.kA.value);
+  private final JoystickButton intakeOut =
+      new JoystickButton(driverController, XboxController.Button.kRightBumper.value);
 
   private Drivetrain drivetrain;
   private Pneumatics pneumatics;
+  private Intake intake;
 
   // use AdvantageKit's LoggedDashboardChooser instead of SendableChooser to ensure accurate logging
   private final LoggedDashboardChooser<Command> autoChooser =
@@ -114,6 +120,7 @@ public class RobotContainer {
 
             drivetrain = new Drivetrain(gyro, flModule, frModule, blModule, brModule);
             new Pneumatics(new PneumaticsIORev(false));
+            intake = new Intake(new IntakeIOFalcon());
             break;
           }
         case ROBOT_SIMBOT:
@@ -131,6 +138,7 @@ public class RobotContainer {
                 new SwerveModule(new SwerveModuleIOSim(), 3, MAX_VELOCITY_METERS_PER_SECOND);
             drivetrain = new Drivetrain(new GyroIO() {}, flModule, frModule, blModule, brModule);
             pneumatics = new Pneumatics(new PneumaticsIO() {});
+            intake = new Intake(new IntakeIO() {});
             break;
           }
         default:
@@ -151,6 +159,7 @@ public class RobotContainer {
           new SwerveModule(new SwerveModuleIO() {}, 3, MAX_VELOCITY_METERS_PER_SECOND);
       drivetrain = new Drivetrain(new GyroIO() {}, flModule, frModule, blModule, brModule);
       pneumatics = new Pneumatics(new PneumaticsIO() {});
+      intake = new Intake(new IntakeIO() {});
     }
 
     // workaround warning about unused variable
@@ -205,6 +214,14 @@ public class RobotContainer {
     // x-stance
     xStance.onTrue(Commands.runOnce(drivetrain::enableXstance, drivetrain));
     xStance.onFalse(Commands.runOnce(drivetrain::disableXstance, drivetrain));
+
+    // intake
+    intakeOut.whileTrue(
+        Commands.runOnce(intake::extend, intake)
+            .andThen(Commands.runOnce(() -> intake.runIntakePercent(0.5), intake)));
+    intakeOut.onFalse(
+        Commands.runOnce(intake::retract, intake)
+            .andThen(Commands.runOnce(() -> intake.runIntakePercent(0.0), intake)));
   }
 
   /** Use this method to define your commands for autonomous mode. */

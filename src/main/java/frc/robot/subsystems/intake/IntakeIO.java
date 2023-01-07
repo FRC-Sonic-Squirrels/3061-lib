@@ -21,7 +21,7 @@ public interface IntakeIO {
     public void toLog(LogTable table) {
       table.put("Extended", extended);
 
-      table.put("IntakeVelocityRadPerSec", intakeVelocityRPM);
+      table.put("IntakeVelocityRPM", intakeVelocityRPM);
       table.put("IntakeAppliedVolts", intakeAppliedVolts);
       table.put("IntakeCurrentAmps", intakeCurrentAmps);
       table.put("IntakeTempCelsius", intakeTempCelsius);
@@ -30,10 +30,10 @@ public interface IntakeIO {
     public void fromLog(LogTable table) {
       extended = table.getBoolean("Extended", extended);
 
-      intakeVelocityRPM = table.getDouble("RollerVelocityRPM", intakeVelocityRPM);
-      intakeAppliedVolts = table.getDouble("RollerAppliedVolts", intakeAppliedVolts);
-      intakeCurrentAmps = table.getDoubleArray("RollerCurrentAmps", intakeCurrentAmps);
-      intakeTempCelsius = table.getDoubleArray("RollerTempCelsius", intakeTempCelsius);
+      intakeVelocityRPM = table.getDouble("IntakeVelocityRPM", intakeVelocityRPM);
+      intakeAppliedVolts = table.getDouble("IntakeAppliedVolts", intakeAppliedVolts);
+      intakeCurrentAmps = table.getDoubleArray("IntakeCurrentAmps", intakeCurrentAmps);
+      intakeTempCelsius = table.getDoubleArray("IntakeTempCelsius", intakeTempCelsius);
     }
   }
 
