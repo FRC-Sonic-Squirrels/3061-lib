@@ -42,14 +42,18 @@
     "jama",
     "javac",
     "Nivore",
+    "REVPH",
     "REVPHJNI",
     "rezero",
+    "roboRIO",
     "Sedgewick",
     "setpoint",
     "SIMBOT",
     "teleop",
+    "teleoperated",
     "TRACKWIDTH",
     "Vandermonde",
+    "WPILOG",
     "Xstance"
   ]
 }

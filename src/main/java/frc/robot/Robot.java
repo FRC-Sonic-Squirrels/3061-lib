@@ -57,7 +57,7 @@ public class Robot extends LoggedRobot {
         logger.recordMetadata(GIT_DIRTY, "All changes committed");
         break;
       case 1:
-        logger.recordMetadata(GIT_DIRTY, "Uncomitted changes");
+        logger.recordMetadata(GIT_DIRTY, "Uncommitted changes");
         break;
       default:
         logger.recordMetadata(GIT_DIRTY, "Unknown");
@@ -134,7 +134,7 @@ public class Robot extends LoggedRobot {
   }
 
   /**
-   * This method is invoked at the start of the autonomous poeriod. It schedules the autonomous
+   * This method is invoked at the start of the autonomous period. It schedules the autonomous
    * command selected by your {@link RobotContainer} class.
    */
   @Override

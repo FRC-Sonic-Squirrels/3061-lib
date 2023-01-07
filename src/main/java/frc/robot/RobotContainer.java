@@ -154,7 +154,7 @@ public class RobotContainer {
     }
 
     // workaround warning about unused variable
-    pneumatics.getPressure();
+    // pneumatics.getPressure();
 
     // disable all telemetry in the LiveWindow to reduce the processing during each iteration
     LiveWindow.disableAllTelemetry();
