@@ -78,11 +78,18 @@ public class Vision extends SubsystemBase {
       lastTimestamp = getLatestTimestamp();
       for (PhotonTrackedTarget target : getLatestResult().getTargets()) {
         if (isValidTarget(target)) {
+          // photon camera to target
           Transform3d cameraToTarget = target.getBestCameraToTarget();
+          // the raw json position of target
+          // probably optional to avoid crashes from io errors
           Optional<Pose3d> tagPoseOptional = layout.getTagPose(target.getFiducialId());
           if (tagPoseOptional.isPresent()) {
+            // tag pose from json
             Pose3d tagPose = tagPoseOptional.get();
+            // the camera position, transforms the json tag
+            // by the inverse of photons cameraToTarget. CameraToTarget inverse is TargetToCamera
             Pose3d cameraPose = tagPose.transformBy(cameraToTarget.inverse());
+            // camera might not be in the center of the robot
             Pose3d robotPose = cameraPose.transformBy(VisionConstants.ROBOT_TO_CAMERA.inverse());
             poseEstimator.addVisionMeasurement(robotPose.toPose2d(), getLatestTimestamp());
 
