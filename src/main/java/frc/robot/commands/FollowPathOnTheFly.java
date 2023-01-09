@@ -10,6 +10,13 @@ import frc.robot.subsystems.drivetrain.Drivetrain;
 
 public class FollowPathOnTheFly extends FollowPath {
   /** Creates a new DriveToSpecificPose. */
+
+  /**
+   * Most of the logic is handled by the super class, just generate a trajectory before passing it to the super class
+   * 
+   * @param targetPose
+   * @param drivetrain
+   */
   public FollowPathOnTheFly(Pose2d targetPose, Drivetrain drivetrain) {
     super(drivetrain.generateOnTheFlyTrajectory(targetPose), drivetrain, false);
     // Use addRequirements() here to declare subsystem dependencies.
