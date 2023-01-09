@@ -6,7 +6,11 @@ package frc.robot.subsystems.drivetrain;
 
 import static frc.robot.subsystems.drivetrain.DrivetrainConstants.*;
 
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
+import com.pathplanner.lib.PathPoint;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -511,6 +515,10 @@ public class Drivetrain extends SubsystemBase {
     return chassisSpeeds.vyMetersPerSecond;
   }
 
+  public ChassisSpeeds getCurrentChassisSpeeds() {
+    return chassisSpeeds;
+  }
+
   /**
    * Puts the drivetrain into the x-stance orientation. In this orientation the wheels are aligned
    * to make an 'X'. This makes it more difficult for other robots to push the robot, which is
@@ -583,6 +591,16 @@ public class Drivetrain extends SubsystemBase {
       driveVelocityAverage += swerveModule.getState().speedMetersPerSecond;
     }
     return driveVelocityAverage / 4.0;
+  }
+
+  public PathPlannerTrajectory generateOnTheFlyTrajectory(Pose2d targetPose) {
+    return PathPlanner.generatePath(
+        new PathConstraints(
+            DrivetrainConstants.MAX_VELOCITY_METERS_PER_SECOND,
+            DrivetrainConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND),
+        PathPoint.fromCurrentHolonomicState(this.getPose(), this.getCurrentChassisSpeeds()),
+        new PathPoint(
+            targetPose.getTranslation(), Rotation2d.fromDegrees(0), targetPose.getRotation()));
   }
 
   private enum DriveMode {
