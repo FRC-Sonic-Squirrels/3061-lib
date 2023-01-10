@@ -47,14 +47,18 @@
     "odometry",
     "photonvision",
     "rapidreact",
+    "REVPH",
     "REVPHJNI",
     "rezero",
+    "roboRIO",
     "Sedgewick",
     "setpoint",
     "SIMBOT",
     "teleop",
+    "teleoperated",
     "TRACKWIDTH",
     "Vandermonde",
+    "WPILOG",
     "Xstance"
   ]
 }

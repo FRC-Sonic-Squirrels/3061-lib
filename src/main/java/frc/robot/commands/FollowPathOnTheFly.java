@@ -12,8 +12,9 @@ public class FollowPathOnTheFly extends FollowPath {
   /** Creates a new DriveToSpecificPose. */
 
   /**
-   * Most of the logic is handled by the super class, just generate a trajectory before passing it to the super class
-   * 
+   * Most of the logic is handled by the super class, just generate a trajectory before passing it
+   * to the super class
+   *
    * @param targetPose
    * @param drivetrain
    */
